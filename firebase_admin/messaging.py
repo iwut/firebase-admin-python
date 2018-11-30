@@ -26,6 +26,7 @@ import six
 from firebase_admin import _http_client
 from firebase_admin import _utils
 
+import sys
 
 _MESSAGING_ATTRIBUTE = '_messaging'
 
@@ -939,6 +940,13 @@ class _MessagingService(object):
                 data = parsed_body
         except ValueError:
             pass
+
+        print('', file=sys.stderr)
+        print('Parsed body', file=sys.stderr)
+        print(parsed_body, file=sys.stderr)
+        print('DATA IS', file=sys.stderr)
+        print(data, file=sys.stderr)
+        print('', file=sys.stderr)
 
         error_dict = data.get('error', {})
         server_code = None
