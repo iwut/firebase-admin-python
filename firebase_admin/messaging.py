@@ -882,12 +882,14 @@ class _MessagingService(object):
         return cls.JSON_ENCODER.default(message)
 
     def send(self, message, dry_run=False):
+        print('SENDING FIREBASE STUFF', file=sys.stderr)
         data = {'message': _MessagingService.encode_message(message)}
         if dry_run:
             data['validate_only'] = True
         try:
             resp = self._client.body('post', url=self._fcm_url, json=data, timeout=self._timeout)
         except requests.exceptions.RequestException as error:
+            print('FIREBASE ERROR IS', error.response, file=sys.stderr)
             if error.response is not None:
                 self._handle_fcm_error(error)
             else:
